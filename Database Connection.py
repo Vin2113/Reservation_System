@@ -1,8 +1,8 @@
 import mysql.connector
 connection = mysql.connector.connect(host='localhost',
                              user='root',
-                             password='Vl1021996499.',
-                            database = 'reservation_system'
+                             password='NGERNNGa_382563!@',
+                            database = 'project_demo'
                            )
 cursor = connection.cursor()
 query = ('SELECT email FROM customer')

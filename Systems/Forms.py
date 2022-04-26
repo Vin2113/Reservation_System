@@ -1,7 +1,13 @@
+from random import choices
+from secrets import choice
+from tkinter.tix import Select
+from jmespath import search
+from datetime import datetime, date
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
-import email_validator
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
+from wtforms.fields import DateTimeField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms_components import DateRange
 from Reservation import login_manager
 from model import my_cursor
 
@@ -61,3 +67,9 @@ class LoginForm(FlaskForm):
                            validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
+
+
+class SearchForm(FlaskForm):
+    depart = SelectField("Departure", choices =[]);
+    arrival = SelectField("Arrival", choices =[]);
+    time = DateTimeField();
