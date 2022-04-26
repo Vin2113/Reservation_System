@@ -68,7 +68,6 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
-
 class SearchForm(FlaskForm):
     depart = SelectField("Departure", choices =[]);
     arrival = SelectField("Arrival", choices =[]);

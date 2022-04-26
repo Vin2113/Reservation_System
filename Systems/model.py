@@ -1,8 +1,7 @@
 import pymysql
 connection = pymysql.connections.Connection(host='localhost',
-                            user='root',
-                            password='NGERNNGa_382563!@',
-                            database = 'Project_demo',
-                            port= 3307
+                             user='root',
+                             password='Vl1021996499.',
+                            database = 'reservation_system'
                            )
 my_cursor = connection.cursor()
