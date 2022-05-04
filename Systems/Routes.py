@@ -1,13 +1,25 @@
 from Reservation import app, bcrypt
-from Forms import RegistrationForm, LoginForm
+from Forms import RegistrationForm, LoginForm, SearchForm
 from flask_login import login_user, current_user, logout_user, login_required
 from flask import render_template, flash, redirect, session, request, url_for
 import datetime
 from model import my_cursor, connection
+
+import pymysql
+
+
 @app.route('/')
-@app.route('/home')
+@app.route('/home',methods=["GET","POST"])
 def home():
-    return render_template('Layout.html', title='Home')
+    form = SearchForm()
+    with connection.cursor(pymysql.cursors.DictCursor) as mycursor:
+        mycursor.execute("SELECT * FROM airport")
+        depart = mycursor.fetchall()
+        print(depart)
+        mycursor.close()
+    form.depart.choices = [(location["airport_name"], location["airport_city"])for location in depart]
+    form.arrival.choices = [(location["airport_name"], location["airport_city"])for location in depart]
+    return render_template('Home.html', title='Home', form=form)
 
 @app.route('/register', methods=["GET", 'POST'])
 

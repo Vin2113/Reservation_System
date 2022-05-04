@@ -1,0 +1,17 @@
+{% extends "Layout.html" %}
+{% block content %}
+<div class="container">
+    <form method= "post">
+    <div class = "col-md-7">
+    <div>From:</Div>
+        {{ form.csrf_token }}
+        {{ form.depart(class_="selectpicker", data_live_search="true") }}
+        {{ form.arrival(class_="selectpicker",data_live_search="true")}}
+        <input type="submit">
+    </form> 
+    </div>
+
+
+
+</div>
+{% endblock content%}

@@ -1,5 +1,5 @@
-import mysql.connector
-connection = mysql.connector.connect(host='localhost',
+import pymysql
+connection = pymysql.connections.Connection(host='localhost',
                              user='root',
                              password='Vl1021996499.',
                             database = 'reservation_system'
