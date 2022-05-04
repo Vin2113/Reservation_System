@@ -12,4 +12,3 @@ login_manager = LoginManager(app)
 import Routes
 
 
-
