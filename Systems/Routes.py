@@ -4,7 +4,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from flask import render_template, flash, redirect, session, request, url_for
 import datetime
 from model import my_cursor, connection
-import pymysql
+import pymysql.cursors
 
 
 @app.route('/')
@@ -30,15 +30,13 @@ def search():
         form.arrival.choices = [(form.arrival.data,form.arrival.data)]
         l = depart.split(",")
         al = dest.split(",")
-        departa = l[1]
-        desta = al[1]
+        departa = l[1].strip()
+        desta = al[1].strip()
         with connection.cursor(pymysql.cursors.DictCursor) as mycursor:
             mycursor.execute("SELECT * FROM available_flights WHERE departure_airport=\'"+desta+"\'")
             res = mycursor.fetchall()
             print(res)
             mycursor.close()
-        print(departa)
-        print(desta)
         return render_template('Search.html', title='Home', form=form, res=res)
 
 
