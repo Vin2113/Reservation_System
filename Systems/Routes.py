@@ -4,8 +4,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from flask import render_template, flash, redirect, session, request, url_for
 import datetime
 from model import my_cursor, connection
-
-import pymysql
+import pymysql.cursors
 
 
 @app.route('/')
@@ -13,13 +12,33 @@ import pymysql
 def home():
     form = SearchForm()
     with connection.cursor(pymysql.cursors.DictCursor) as mycursor:
-        mycursor.execute("SELECT * FROM airport")
+        mycursor.execute("SELECT * FROM airport ")
         depart = mycursor.fetchall()
         print(depart)
         mycursor.close()
-    form.depart.choices = [(location["airport_name"], location["airport_city"])for location in depart]
-    form.arrival.choices = [(location["airport_name"], location["airport_city"])for location in depart]
+    form.depart.choices = [(location["airport_city"] + ", " + location["airport_name"], location["airport_city"] + ", " + location["airport_name"])for location in depart]
+    form.arrival.choices = [(location["airport_city"] + ", " + location["airport_name"], location["airport_city"] + ", " + location["airport_name"])for location in depart]
     return render_template('Home.html', title='Home', form=form)
+
+@app.route('/search', methods = ["POST"])
+def search():
+    form=SearchForm()
+    if form.validate_on_submit():
+        depart = form.depart.data
+        dest = form.arrival.data
+        form.depart.choices = [(form.depart.data,form.depart.data)]
+        form.arrival.choices = [(form.arrival.data,form.arrival.data)]
+        l = depart.split(",")
+        al = dest.split(",")
+        departa = l[1].strip()
+        desta = al[1].strip()
+        with connection.cursor(pymysql.cursors.DictCursor) as mycursor:
+            mycursor.execute("SELECT * FROM available_flights WHERE departure_airport=\'"+desta+"\'")
+            res = mycursor.fetchall()
+            print(res)
+            mycursor.close()
+        return render_template('Search.html', title='Home', form=form, res=res)
+
 
 @app.route('/register', methods=["GET", 'POST'])
 
