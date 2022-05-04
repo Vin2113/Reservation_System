@@ -70,6 +70,6 @@ class LoginForm(FlaskForm):
 
 
 class SearchForm(FlaskForm):
-    depart = SelectField("Departure", choices =[]);
-    arrival = SelectField("Arrival", choices =[]);
-    time = DateTimeField();
+    depart = SelectField("Departure", choices =[],validate_choice=False)
+    arrival = SelectField("Arrival", choices =[],validate_choice=False)
+    time = DateTimeField()
